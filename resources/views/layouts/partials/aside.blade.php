@@ -13,6 +13,7 @@
             <span>الاساسيات</span>
         </p>
         <ul class="navbar-nav flex-fill w-100 mb-2">
+            @can('view','App\\Models\Record')
             <li class="nav-item w-100">
                 <a class="nav-link" href="{{route('records.index')}}">
                     <i class="fe fe-archive fe-16"></i>
@@ -20,12 +21,16 @@
                     {{-- <span class="badge badge-pill badge-primary">New</span> --}}
                 </a>
             </li>
+            @endcan
+            @can('view','App\\Models\RecordsConstant')
             <li class="nav-item w-100">
                 <a class="nav-link" href="{{route('records-recordsConstants')}}">
                     <i class="fe fe-layers fe-16"></i>
                     <span class="ml-3 item-text">الثوابت</span>
                 </a>
             </li>
+            @endcan
+
 
             {{-- for example --}}
             {{-- <li class="nav-item dropdown">
@@ -74,16 +79,21 @@
                 </a>
             </li> --}}
         </ul>
+        @can('view','App\\Models\User')
         <p class="text-muted nav-heading mt-4 mb-1">
-            <span>الاساسيات</span>
+            <span>النظام</span>
         </p>
+        @endcan
         <ul class="navbar-nav flex-fill w-100 mb-2">
+            @can('view','App\\Models\User')
             <li class="nav-item w-100">
                 <a class="nav-link" href="{{route('users.index')}}">
                     <i class="fe fe-users fe-16"></i>
                     <span class="ml-3 item-text">المستخدمين</span>
                 </a>
             </li>
+
+            @endcan
 
 
         </ul>
