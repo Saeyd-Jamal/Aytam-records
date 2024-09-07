@@ -1,3 +1,0 @@
-'name','gender','orphan_id','date_of_birth','address_of_birth','orphan_age','Id_father','DFB_father','mother_name','Id_mother','DMB_mother','guardian_name','guardian_RWO','guardian_id','DGM_guardian','status_health_orphan','health_status_notes','deceased_name','date_of_death','cause_of_death','child_orphaned_parents','DMD_mother','CMD_mother','N_brothers','N_sisters','CH_house','p_province','p_city','p_address','c_province','c_city','c_address','orphan_displaced','mobile number1','mobile number2','WhatsApp_number','livery','financial_aid','notes_orphan','data_portal','data_portal_name'
-
-
