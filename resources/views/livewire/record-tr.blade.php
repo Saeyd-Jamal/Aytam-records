@@ -85,7 +85,7 @@
                 </select>
             </div>
             <div class="form-group col-md-3">
-                <x-form.input name="mother_id" label="رقم هوية الام" placeholder="إملا رقم هوية الام" maxlength="9" wire:model="flterArray.mother_id" wire:input="filter"/>
+                <x-form.input name="Id_mother" label="رقم هوية الام" placeholder="إملا رقم هوية الام" maxlength="9" wire:model="flterArray.Id_mother" wire:input="filter"/>
             </div>
             <div class="form-group col-md-3">
                 <x-form.input name="deceased_name" label="اسم المتوفى" placeholder="إملا اسم المتوفي" wire:model="flterArray.deceased_name" wire:input="filter"/>

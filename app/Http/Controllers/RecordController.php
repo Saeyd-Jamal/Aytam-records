@@ -191,10 +191,15 @@ class RecordController extends Controller
     {
         $records = Record::get();
         foreach ($records as $record) {
-            $age = Carbon::now()->format('Y') - Carbon::parse($record->date_of_birth)->format('Y');
-            $record->update([
-                'orphan_age'=> $age ,
-            ]);
+            try{
+                $age = Carbon::now()->format('Y') - Carbon::parse($record->date_of_birth)->format('Y');
+                $record->update([
+                    'orphan_age'=> $age ,
+                ]);
+            }catch(Exception $e){
+                // throw $e;
+                continue;
+            }
         }
         return redirect()->route('records.index')->with('success', 'تم رفع الملف');
     }

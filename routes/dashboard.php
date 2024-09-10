@@ -18,7 +18,7 @@ Route::group([
 
     Route::post('records/checkID',[RecordController::class,'checkID']);
     Route::post('records/importFile',[RecordController::class,'import'])->name('records-import');
-    Route::post('records/editAge',[RecordController::class,'editAge'])->name('records-editAge');
+    Route::get('records/editAge',[RecordController::class,'editAge'])->name('records-editAge');
 
     Route::resources([
         'records' => RecordController::class,
