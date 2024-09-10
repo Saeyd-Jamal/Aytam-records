@@ -56,10 +56,13 @@ class RecordController extends Controller
         DB::beginTransaction();
         try{
             $aytam_count = $request->post('aytam_count');
-
+            $data = $request;
             for($i = 1; $i <= $aytam_count; $i++){
                 $age = Carbon::now()->format('Y') - Carbon::parse($request->post('date_of_birth_' . $i))->format('Y');
-                $request->merge([
+
+                $data->except(['orphan_age',"name","gender",'orphan_id','date_of_birth','address_of_birth','notes_orphan','status_health_orphan','health_status_notes','child_orphaned_parents','mother_name','Id_mother','DMB_mother']);
+
+                $data->merge([
                     'orphan_age'=> $age ,
                     "name" => $request->post('name_' . $i),
                     "gender" => $request->post('gender_' . $i),
@@ -74,8 +77,12 @@ class RecordController extends Controller
                     "Id_mother" => $request->post('Id_mother_' . $i),
                     "DMB_mother" => $request->post('DMB_mother_' . $i),
                 ]);
+                $haveOrphan = Record::where('orphan_id', $request->post('orphan_id_' . $i))->first();
+                if($haveOrphan){
+                    return redirect()->back()->with('danger','هذا اليتيم موجود بالفعل');
+                }
                 Record::create(
-                    $request->all()
+                    $data->all()
                 );
             }
             DB::commit();
@@ -177,6 +184,18 @@ class RecordController extends Controller
             return redirect()->back()->with('danger', 'لم يتم رفع الملف');
         }
         Excel::import(new RecordImportError, $file);
+        return redirect()->route('records.index')->with('success', 'تم رفع الملف');
+    }
+
+    public function editAge(Request $request)
+    {
+        $records = Record::get();
+        foreach ($records as $record) {
+            $age = Carbon::now()->format('Y') - Carbon::parse($record->date_of_birth)->format('Y');
+            $record->update([
+                'orphan_age'=> $age ,
+            ]);
+        }
         return redirect()->route('records.index')->with('success', 'تم رفع الملف');
     }
 }

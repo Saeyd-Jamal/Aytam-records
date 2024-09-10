@@ -116,9 +116,9 @@ class RecordTr extends Component
         $this->records = $this->records->items();
         $this->dilfilter = '';
     }
-    public function update($name, $value){
+    public function update($id,$name, $value){
         Record::updateOrCreate([
-            'id' => $this->record->id,
+            'id' => $id,
         ],[
             "$name" => $value,
         ]);

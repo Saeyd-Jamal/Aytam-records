@@ -240,10 +240,10 @@
                 @foreach ($records as $record)
                     <tr>
                         <td class="sticky">
-                            <input type="text" name="name" value="{{$record->name}}" class="form-control" title="الاسم" wire:input="update('name', $event.target.value)">
+                            <input type="text" name="name" value="{{$record->name}}" class="form-control" title="الاسم" wire:input="update({{$record->id}},'name', $event.target.value)">
                         </td>
                         <td>
-                            <select class="form-control" name="gender" wire:input="update('gender', $event.target.value)" title="الجنس" >
+                            <select class="form-control" name="gender" wire:input="update({{$record->id}},'gender', $event.target.value)" title="الجنس" >
                                 <option value="ذكر" @selected($record->gender == 'ذكر')>
                                     ذكر
                                 </option>
@@ -253,38 +253,38 @@
                             </select>
                         </td>
                         <td>
-                            <input type="text" name="orphan_id" value="{{$record->orphan_id}}" class="form-control" title="رقم الهوية" wire:input="update('orphan_id', $event.target.value)" minlength="9" maxlength="9" >
+                            <input type="text" name="orphan_id" value="{{$record->orphan_id}}" class="form-control" title="رقم الهوية" wire:input="update({{$record->id}},'orphan_id', $event.target.value)" minlength="9" maxlength="9" >
                         </td>
                         <td>
-                            <input type="date" name="date_of_birth" value="{{$record->date_of_birth}}" class="form-control" title="تاريخ الميلاد" wire:input="update('date_of_birth', $event.target.value)" min="{{ $date_of_birth }}" max="{{ $date_of_birth_to }}">
+                            <input type="date" name="date_of_birth" value="{{$record->date_of_birth}}" class="form-control" title="تاريخ الميلاد" wire:input="update({{$record->id}},'date_of_birth', $event.target.value)" min="{{ $date_of_birth }}" max="{{ $date_of_birth_to }}">
                         </td>
                         <td>
-                            <input type="text" name="address_of_birth" value="{{$record->address_of_birth}}" class="form-control" title="عنوان الميلاد" wire:input="update('address_of_birth', $event.target.value)">
+                            <input type="text" name="address_of_birth" value="{{$record->address_of_birth}}" class="form-control" title="عنوان الميلاد" wire:input="update({{$record->id}},'address_of_birth', $event.target.value)">
                         </td>
                         <td>
                             <input type="text" name="orphan_age" value="{{$record->orphan_age}}" class="form-control" title="عمر اليتيم"  readonly>
                         </td>
                         <td>
-                            <input type="text" name="Id_father" value="{{$record->Id_father}}" class="form-control" title="رقم الهوية الاب" wire:input="update('Id_father', $event.target.value)" minlength="9"
+                            <input type="text" name="Id_father" value="{{$record->Id_father}}" class="form-control" title="رقم الهوية الاب" wire:input="update({{$record->id}},'Id_father', $event.target.value)" minlength="9"
                             maxlength="9">
                         </td>
                         <td>
-                            <input type="date" name="DFB_father" value="{{$record->DFB_father}}" class="form-control" title="تاريخ الميلاد الاب" wire:input="update('DFB_father', $event.target.value)">
+                            <input type="date" name="DFB_father" value="{{$record->DFB_father}}" class="form-control" title="تاريخ الميلاد الاب" wire:input="update({{$record->id}},'DFB_father', $event.target.value)">
                         </td>
                         <td>
-                            <input type="text" name="mother_name" value="{{$record->mother_name}}" class="form-control" title="اسم الام" wire:input="update('mother_name', $event.target.value)">
+                            <input type="text" name="mother_name" value="{{$record->mother_name}}" class="form-control" title="اسم الام" wire:input="update({{$record->id}},'mother_name', $event.target.value)">
                         </td>
                         <td>
-                            <input type="text" name="Id_mother" value="{{$record->Id_mother}}" class="form-control" title="رقم الهوية الام" wire:input="update('Id_mother', $event.target.value)">
+                            <input type="text" name="Id_mother" value="{{$record->Id_mother}}" class="form-control" title="رقم الهوية الام" wire:input="update({{$record->id}},'Id_mother', $event.target.value)">
                         </td>
                         <td>
-                            <input type="date" name="DMB_mother" value="{{$record->DMB_mother}}" class="form-control" title="تاريخ الميلاد الام" wire:input="update('DMB_mother', $event.target.value)">
+                            <input type="date" name="DMB_mother" value="{{$record->DMB_mother}}" class="form-control" title="تاريخ الميلاد الام" wire:input="update({{$record->id}},'DMB_mother', $event.target.value)">
                         </td>
                         <td>
-                            <input type="text" name="guardian_name" value="{{$record->guardian_name}}" class="form-control" title="اسم ولي الأمر" wire:input="update('guardian_name', $event.target.value)">
+                            <input type="text" name="guardian_name" value="{{$record->guardian_name}}" class="form-control" title="اسم ولي الأمر" wire:input="update({{$record->id}},'guardian_name', $event.target.value)">
                         </td>
                         <td>
-                            <select class="form-control" name="guardian_RWO" title="العلاقة" wire:input="update('guardian_RWO', $event.target.value)">
+                            <select class="form-control" name="guardian_RWO" title="العلاقة" wire:input="update({{$record->id}},'guardian_RWO', $event.target.value)">
                                 <option label="أختر العلاقة" @selected($record->guardian_RWO == null)>
                                 </option>
                                 @foreach ($guardian_RWOs_array as $guardian_RWO)
@@ -295,13 +295,13 @@
                             </select>
                         </td>
                         <td>
-                            <input type="text" name="guardian_id" value="{{$record->guardian_id}}" class="form-control" title="رقم الهوية ولي الأمر" wire:input="update('guardian_id', $event.target.value)" minlength="9" maxlength="9">
+                            <input type="text" name="guardian_id" value="{{$record->guardian_id}}" class="form-control" title="رقم الهوية ولي الأمر" wire:input="update({{$record->id}},'guardian_id', $event.target.value)" minlength="9" maxlength="9">
                         </td>
                         <td>
-                            <input type="date" name="DGM_guardian" value="{{$record->DGM_guardian}}" class="form-control" title="تاريخ الميلاد ولي الأمر" wire:input="update('DGM_guardian', $event.target.value)">
+                            <input type="date" name="DGM_guardian" value="{{$record->DGM_guardian}}" class="form-control" title="تاريخ الميلاد ولي الأمر" wire:input="update({{$record->id}},'DGM_guardian', $event.target.value)">
                         </td>
                         <td>
-                            <select class="form-control" name="status_health_orphan" title="الحالة الصحية" wire:input="update('status_health_orphan', $event.target.value)">
+                            <select class="form-control" name="status_health_orphan" title="الحالة الصحية" wire:input="update({{$record->id}},'status_health_orphan', $event.target.value)">
                                 <option label="أختر الحالة" @selected($record->status_health_orphan == 'null')>
                                 </option>
                                 @foreach ($status_health_orphan_array as $status_health_orphan)
@@ -312,16 +312,16 @@
                             </select>
                         </td>
                         <td>
-                            <textarea class="form-control" name="health_status_notes" placeholder="يمكنك شرح الحالة بشكل مفصل" rows="2"  title="ملاحظات الحالة الصحية" wire:input="update('health_status_notes', $event.target.value)">{{ $record->health_status_notes }}</textarea>
+                            <textarea class="form-control" name="health_status_notes" placeholder="يمكنك شرح الحالة بشكل مفصل" rows="2"  title="ملاحظات الحالة الصحية" wire:input="update({{$record->id}},'health_status_notes', $event.target.value)">{{ $record->health_status_notes }}</textarea>
                         </td>
                         <td>
-                            <input type="text" name="deceased_name" value="{{$record->deceased_name}}" class="form-control" title="اسم المتوفى" wire:input="update('deceased_name', $event.target.value)">
+                            <input type="text" name="deceased_name" value="{{$record->deceased_name}}" class="form-control" title="اسم المتوفى" wire:input="update({{$record->id}},'deceased_name', $event.target.value)">
                         </td>
                         <td>
-                            <input type="date" name="date_of_death" value="{{$record->date_of_death}}" class="form-control" title="تاريخ وفاء المتوفى" wire:input="update('date_of_death', $event.target.value)">
+                            <input type="date" name="date_of_death" value="{{$record->date_of_death}}" class="form-control" title="تاريخ وفاء المتوفى" wire:input="update({{$record->id}},'date_of_death', $event.target.value)">
                         </td>
                         <td>
-                            <select class="form-control" name="cause_of_death" title="سبب وفاء المتوفى" wire:input="update('cause_of_death', $event.target.value)">
+                            <select class="form-control" name="cause_of_death" title="سبب وفاء المتوفى" wire:input="update({{$record->id}},'cause_of_death', $event.target.value)">
                                 <option label="أختر السبب" @selected($record->cause_of_death == null)>
                                 </option>
                                 @foreach ($causes_of_death_array as $cause_of_death)
@@ -332,7 +332,7 @@
                             </select>
                         </td>
                         <td>
-                            <select class="form-control" id="child_orphaned_parents" name="child_orphaned_parents" title="الطفل يتيم الأبوين؟" wire:input="update('child_orphaned_parents', $event.target.value)">
+                            <select class="form-control" id="child_orphaned_parents" name="child_orphaned_parents" title="الطفل يتيم الأبوين؟" wire:input="update({{$record->id}},'child_orphaned_parents', $event.target.value)">
                                 <option label="أختر" @selected($record->child_orphaned_parents == null)>
                                 </option>
                                 @foreach ($child_orphaned_parents_array as $child_orphaned_parents)
@@ -343,7 +343,7 @@
                             </select>
                         </td>
                         <td>
-                            <input type="date" name="DMD_mother" value="{{$record->DMD_mother}}" class="form-control" title="تاريخ وفاء الام" wire:input="update('DMD_mother', $event.target.value)"  @disabled($record->child_orphaned_parents == 'يتيم الأب' || $record->child_orphaned_parents == null)>
+                            <input type="date" name="DMD_mother" value="{{$record->DMD_mother}}" class="form-control" title="تاريخ وفاء الام" wire:input="update({{$record->id}},'DMD_mother', $event.target.value)"  @disabled($record->child_orphaned_parents == 'يتيم الأب' || $record->child_orphaned_parents == null)>
                         </td>
                         <td>
                             <select class="form-control fields_mother" name="CMD_mother" @disabled($record->child_orphaned_parents == 'يتيم الأب' || $record->child_orphaned_parents == null) title="سبب وفاء الام" wire:input="update('CMD_mother', $event.target.value)">
@@ -357,14 +357,14 @@
                             </select>
                         </td>
                         <td>
-                            <input type="number" name="N_brothers" value="{{$record->N_brothers}}" class="form-control" title="عدد الاخوات" wire:input="update('N_brothers', $event.target.value)" min='0'>
+                            <input type="number" name="N_brothers" value="{{$record->N_brothers}}" class="form-control" title="عدد الاخوات" wire:input="update({{$record->id}},'N_brothers', $event.target.value)" min='0'>
 
                         </td>
                         <td>
-                            <input type="number" name="N_sisters" value="{{$record->N_sisters}}" class="form-control" title="عدد الاخوات" wire:input="update('N_sisters', $event.target.value)" min='0'>
+                            <input type="number" name="N_sisters" value="{{$record->N_sisters}}" class="form-control" title="عدد الاخوات" wire:input="update({{$record->id}},'N_sisters', $event.target.value)" min='0'>
                         </td>
                         <td>
-                            <select class="form-control" name="CH_house" title="وضع المنزل" wire:input="update('CH_house', $event.target.value)">
+                            <select class="form-control" name="CH_house" title="وضع المنزل" wire:input="update({{$record->id}},'CH_house', $event.target.value)">
                                 <option label="أختر الحالة" @selected($record->CH_house == null)>
                                 </option>
                                 @foreach ($CH_house_array as $CH_house)
@@ -375,7 +375,7 @@
                             </select>
                         </td>
                         <td>
-                            <select class="form-control" name="p_province" title="المحافظة السابقة" wire:input="update('p_province', $event.target.value)">
+                            <select class="form-control" name="p_province" title="المحافظة السابقة" wire:input="update({{$record->id}},'p_province', $event.target.value)">
                                 <option label="أختر المكان" @selected($record->p_province == null)>
                                 </option>
                                 @foreach ($provinces_array as $province)
@@ -386,7 +386,7 @@
                             </select>
                         </td>
                         <td>
-                            <select class="form-control" name="p_city" title="المدينة السابقة" wire:input="update('p_city', $event.target.value)">
+                            <select class="form-control" name="p_city" title="المدينة السابقة" wire:input="update({{$record->id}},'p_city', $event.target.value)">
                                 <option label="أختر المكان" @selected($record->p_city == null)>
                                 </option>
                                 @foreach ($cities_array as $city)
@@ -397,10 +397,10 @@
                             </select>
                         </td>
                         <td>
-                            <textarea class="form-control" name="p_address" placeholder="أدخل العنوان السابق بالتفصيل" rows="2" title="العنوان السابق" wire:input="update('p_address', $event.target.value)">{{ $record->p_address }}</textarea>
+                            <textarea class="form-control" name="p_address" placeholder="أدخل العنوان السابق بالتفصيل" rows="2" title="العنوان السابق" wire:input="update({{$record->id}},'p_address', $event.target.value)">{{ $record->p_address }}</textarea>
                         </td>
                         <td>
-                            <select class="form-control fields_address_displaced" name="c_province" title="المحافظة الحالية" wire:input="update('c_province', $event.target.value)" @disabled($record->orphan_displaced == 'لا')>
+                            <select class="form-control fields_address_displaced" name="c_province" title="المحافظة الحالية" wire:input="update({{$record->id}},'c_province', $event.target.value)" @disabled($record->orphan_displaced == 'لا')>
                                 <option label="أختر المكان" @selected($record->c_province == null)>
                                 </option>
                                 @foreach ($provinces_array as $province)
@@ -411,7 +411,7 @@
                             </select>
                         </td>
                         <td>
-                            <select class="form-control fields_address_displaced" name="c_city" title="المدينة الحالية" wire:input="update('c_city', $event.target.value)" @disabled($record->orphan_displaced == 'لا')>
+                            <select class="form-control fields_address_displaced" name="c_city" title="المدينة الحالية" wire:input="update({{$record->id}},'c_city', $event.target.value)" @disabled($record->orphan_displaced == 'لا')>
                                 <option label="أختر المكان" @selected($record->c_city == null)>
                                 </option>
                                 @foreach ($cities_array as $city)
@@ -423,10 +423,10 @@
                         </td>
                         <td>
                             <textarea class="form-control fields_address_displaced" name="c_address" @disabled($record->orphan_displaced == 'لا')
-                                placeholder="أدخل العنوان الحالي بالتفصيل" rows="2" title="العنوان الحالي" wire:input="update('c_address', $event.target.value)">{{ $record->c_address }}</textarea>
+                                placeholder="أدخل العنوان الحالي بالتفصيل" rows="2" title="العنوان الحالي" wire:input="update({{$record->id}},'c_address', $event.target.value)">{{ $record->c_address }}</textarea>
                         </td>
                         <td>
-                            <select class="form-control" id="orphan_displaced" name="orphan_displaced" title="اليتيم نازح؟" wire:input="update('orphan_displaced', $event.target.value)">
+                            <select class="form-control" id="orphan_displaced" name="orphan_displaced" title="اليتيم نازح؟" wire:input="update({{$record->id}},'orphan_displaced', $event.target.value)">
                                 <option label="أختر الحالة" @selected($record->orphan_displaced == null)>
                                 </option>
                                 @foreach ($orphan_displaced_array as $orphan_displaced)
@@ -437,23 +437,23 @@
                             </select>
                         </td>
                         <td>
-                            <input type="text" name="mobile_number1" value="{{$record->mobile_number1}}" class="form-control" title="رقم الجوال" wire:input="update('mobile_number1', $event.target.value)">
+                            <input type="text" name="mobile_number1" value="{{$record->mobile_number1}}" class="form-control" title="رقم الجوال" wire:input="update({{$record->id}},'mobile_number1', $event.target.value)">
                         </td>
                         <td>
-                            <input type="text" name="mobile_number2" value="{{$record->mobile_number2}}" class="form-control" title="رقم الجوال" wire:input="update('mobile_number2', $event.target.value)">
+                            <input type="text" name="mobile_number2" value="{{$record->mobile_number2}}" class="form-control" title="رقم الجوال" wire:input="update({{$record->id}},'mobile_number2', $event.target.value)">
                         </td>
                         <td>
-                            <input type="text" name="WhatsApp_number" value="{{$record->WhatsApp_number}}" class="form-control" title="رقم الواتساب" wire:input="update('WhatsApp_number', $event.target.value)">
+                            <input type="text" name="WhatsApp_number" value="{{$record->WhatsApp_number}}" class="form-control" title="رقم الواتساب" wire:input="update({{$record->id}},'WhatsApp_number', $event.target.value)">
                         </td>
                         <td>
-                            <select class="form-control" name="livery" title="كسوة" wire:input="update('livery', $event.target.value)">
+                            <select class="form-control" name="livery" title="كسوة" wire:input="update({{$record->id}},'livery', $event.target.value)">
                                 <option label="أختر" @selected($record->livery == null)></option>
                                 <option value="نعم" @selected($record->livery == 'نعم')>نعم</option>
                                 <option value="لا" @selected($record->livery == 'لا')>لا</option>
                             </select>
                         </td>
                         <td>
-                            <select class="form-control" name="financial_aid" title="الدعم المالي" wire:input="update('financial_aid', $event.target.value)">
+                            <select class="form-control" name="financial_aid" title="الدعم المالي" wire:input="update({{$record->id}},'financial_aid', $event.target.value)">
                                 <option label="أختر" @selected($record->financial_aid == null)>
                                 </option>
                                 <option value="نعم" @selected($record->financial_aid == 'نعم')>نعم</option>
@@ -461,7 +461,7 @@
                             </select>
                         </td>
                         <td>
-                            <textarea class="form-control" name="notes_orphan" placeholder="يمكنك كتابة ملاحظات " rows="2">{{ $record->notes_orphan }}</textarea>
+                            <textarea class="form-control" name="notes_orphan" placeholder="يمكنك كتابة ملاحظات " rows="2" wire:input="update({{$record->id}},'notes_orphan', $event.target.value)">{{ $record->notes_orphan }}</textarea>
                         </td>
                         <td>
                             {{$record->data_portal_name}}
