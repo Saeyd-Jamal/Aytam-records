@@ -91,7 +91,7 @@
                 <x-form.input name="deceased_name" label="اسم المتوفى" placeholder="إملا اسم المتوفي" wire:model="flterArray.deceased_name" wire:input="filter"/>
             </div>
             <div class="form-group col-md-3">
-                <x-form.input placeholder="اسم ولي الامر" name="guardian_name" wire:model="flterArray.guardian_name" wire:input="filter"/>
+                <x-form.input placeholder="اسم ولي الامر" label="اسم ولي الامر" name="guardian_name" wire:model="flterArray.guardian_name" wire:input="filter"/>
             </div>
             <div class="form-group col-md-3">
                 <x-form.input name="guardian_id" label="رقم هوية ولي الامر" placeholder="إملا رقم هوية ولي الأمر" maxlength="9" wire:model="flterArray.guardian_id" wire:input="filter"/>
@@ -193,6 +193,8 @@
         <table class="table table-hover table-bordered">
             <thead class="thead-dark">
                 <tr>
+                    <th></th>
+                    <th>#</th>
                     <th class="sticky">الاسم</th>
                     <th>الجنس</th>
                     <th>رقم الهوية</th>
@@ -200,7 +202,7 @@
                     <th>مكان الميلاد</th>
                     <th>عمر اليتيم</th>
                     <th>رقم هوية الأب</th>
-                    <th>اسم الأب</th>
+                    <th>تاريخ ميلاد الاب</th>
                     <th>اسم الأم</th>
                     <th>رقم هوية الأم</th>
                     <th>تاريخ ميلاد الأم</th>
@@ -233,12 +235,22 @@
                     <th>كفالة؟</th>
                     <th>ملاحظات عن اليتيم</th>
                     <th>مدخل البيانات</th>
-                    <th colspan="2"></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($records as $record)
                     <tr>
+                        <td>
+                            @can('update', 'App\\Models\Record')
+                            <a href="{{route('records.edit', $record->id)}}">
+                                <i class="fe fe-edit"></i>
+                            </a>
+                            @endcan
+                        </td>
+                        <td>
+                            {{ $loop->iteration }}
+                        </td>
                         <td class="sticky">
                             <input type="text" name="name" value="{{$record->name}}" class="form-control" title="الاسم" wire:input="update({{$record->id}},'name', $event.target.value)">
                         </td>
@@ -465,13 +477,6 @@
                         </td>
                         <td>
                             {{$record->data_portal_name}}
-                        </td>
-                        <td>
-                            @can('update', 'App\\Models\Record')
-                            <a href="{{route('records.edit', $record->id)}}">
-                                <i class="fe fe-edit"></i>
-                            </a>
-                            @endcan
                         </td>
                         <td>
                             @can('delete', 'App\\Models\Record')
