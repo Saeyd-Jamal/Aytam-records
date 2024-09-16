@@ -200,6 +200,7 @@ class RecordController extends Controller
                 $record->DGM_guardian = Record::convertDateExcel($record->DGM_guardian);
                 $record->date_of_death = Record::convertDateExcel($record->date_of_death);
                 $record->DMD_mother = Record::convertDateExcel($record->DMD_mother);
+                $record->save();
             }catch(Exception $e){
                 // throw $e;
                 continue;
