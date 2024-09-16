@@ -29,14 +29,13 @@ class RecordImportError implements ToModel,WithHeadingRow
 
 
         $request = request();
-        dd($row);
         return new Record([
                 'name' => $row['asm_alytym_rbaaay'],
                 'gender' => $row['algns'],
                 'orphan_id' => $row['rkm_hoy_alytym'],
-                'date_of_birth' => $row['tarykh_almylad'],
+                'date_of_birth' => Record::convertDateExcel($row['tarykh_almylad']),
                 'address_of_birth' => $row['mkan_almylad'],
-                'orphan_age' => $row['aamr_alytym'],
+                'orphan_age' => $orphan_age,
                 'Id_father' => $row['rkm_hoy_alab'],
                 'DFB_father' => Record::convertDateExcel($row['tarykh_mylad_alab']),
                 'mother_name' => $row['asm_alam_rbaaay'],
@@ -54,7 +53,7 @@ class RecordImportError implements ToModel,WithHeadingRow
                 'date_of_death' => Record::convertDateExcel($row['tarykh_alofa']),
                 'cause_of_death' => $row['sbb_alofa'],
                 'child_orphaned_parents' => $row['hl_altfl_ytym_alaboyn'],
-                'DMD_mother' => $row['tarykh_ofa_alam'],
+                'DMD_mother' => Record::convertDateExcel($row['tarykh_ofa_alam']),
                 'CMD_mother' => $row['sbb_ofa_alam'],
                 'N_brothers' => $row['aadd_alakho_althkor'],
                 'N_sisters' => $row['aadd_alakho_alanath'],
@@ -64,7 +63,7 @@ class RecordImportError implements ToModel,WithHeadingRow
                 'p_address' => $row['almhafth_alhaly'],
                 'c_province' => $row['almdyn_alhaly'],
                 'c_city' => $row['alaanoan_alhaly_baltfsyl'],
-                'c_address' => $row['c_address'],
+                'c_address' => $row['alaanoan_alhaly_baltfsyl'],
                 'orphan_displaced' => $row['hl_alytym_nazh'],
                 'mobile_number1' => $row['rkm_goal_1'],
                 'mobile_number2' => $row['rkm_goal_2'],
@@ -72,7 +71,7 @@ class RecordImportError implements ToModel,WithHeadingRow
                 'livery' => $row['astfadkso'],
                 'financial_aid' => $row['astfadkfal'],
                 'notes_orphan' => $row['mlahthat_aan_alytym'],
-                'data_portal' => $row['data_portal'],
+                'data_portal' => $request->user()->id,
                 'data_portal_name' => $row['mdkhl_albyanat']
         ]);
     }

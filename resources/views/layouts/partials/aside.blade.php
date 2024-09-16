@@ -9,6 +9,30 @@
                 <img src="{{ asset('assets/images/logo.png') }}" style="max-width: 100%;" class="navbar-brand-img" alt="...">
             </a>
         </div>
+        <style>
+            .news{
+            background:#fff repeat;
+            font-size:14px;
+            width:100%;
+            height:100%;
+
+
+            }
+
+            .news a{
+            color:#067CAD;
+            font-weight:bold;
+            margin-left:20px;
+
+            }
+
+            .news img{
+            display:inline	;
+
+
+
+            }
+        </style>
         <p class="text-muted nav-heading mt-4 mb-1">
             <span>الاساسيات</span>
         </p>

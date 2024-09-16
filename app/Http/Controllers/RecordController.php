@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -76,6 +77,8 @@ class RecordController extends Controller
                     "mother_name" => $request->post('mother_name_' . $i),
                     "Id_mother" => $request->post('Id_mother_' . $i),
                     "DMB_mother" => $request->post('DMB_mother_' . $i),
+                    'data_portal' => $request->user()->id,
+                    'data_portal_name' => $request->user()->name
                 ]);
                 $haveOrphan = Record::where('orphan_id', $request->post('orphan_id_' . $i))->first();
                 if($haveOrphan){
@@ -192,10 +195,11 @@ class RecordController extends Controller
         $records = Record::get();
         foreach ($records as $record) {
             try{
-                $age = Carbon::now()->format('Y') - Carbon::parse($record->date_of_birth)->format('Y');
-                $record->update([
-                    'orphan_age'=> $age ,
-                ]);
+                $record->date_of_birth = Record::convertDateExcel($record->date_of_birth);
+                $record->DMB_mother = Record::convertDateExcel($record->DMB_mother);
+                $record->DGM_guardian = Record::convertDateExcel($record->DGM_guardian);
+                $record->date_of_death = Record::convertDateExcel($record->date_of_death);
+                $record->DMD_mother = Record::convertDateExcel($record->DMD_mother);
             }catch(Exception $e){
                 // throw $e;
                 continue;
