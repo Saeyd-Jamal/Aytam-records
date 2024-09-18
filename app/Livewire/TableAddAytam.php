@@ -48,6 +48,10 @@ class TableAddAytam extends Component
         $this->aytam += 1;
     }
 
+    public function minusRow(){
+        $this->aytam -= 1;
+    }
+
     public function checkID($value){
         $orphan_id = Record::where('orphan_id','=',"{$value}")->first();
         if($orphan_id != null){

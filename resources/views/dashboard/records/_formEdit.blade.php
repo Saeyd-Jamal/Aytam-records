@@ -149,7 +149,9 @@
     <div class="form-group col-md-3">
         <label>تاريخ وفاء الام</label>
         <div class="input-group">
-        <input type="date" name="DMD_mother" id="DMD_mother" :value="$record->DMD_mother" class="form-control form-control-alternative form-control fields_mother" placeholder="MM/DD/YYYY"  @disabled($record->child_orphaned_parents == 'يتيم الأب' || $record->child_orphaned_parents == null)>
+
+
+            <input type="date" name="DMD_mother" id="DMD_mother" value="{{$record->DMD_mother}}" class="form-control form-control-alternative form-control fields_mother"  @disabled($record->child_orphaned_parents == 'يتيم الأب' || $record->child_orphaned_parents == null)>
         </div>
     </div>
     <div class="form-group col-md-3">

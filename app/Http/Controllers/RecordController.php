@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class RecordController extends Controller
@@ -62,7 +63,6 @@ class RecordController extends Controller
                 $age = Carbon::now()->format('Y') - Carbon::parse($request->post('date_of_birth_' . $i))->format('Y');
 
                 $data->except(['orphan_age',"name","gender",'orphan_id','date_of_birth','address_of_birth','notes_orphan','status_health_orphan','health_status_notes','child_orphaned_parents','mother_name','Id_mother','DMB_mother']);
-
                 $data->merge([
                     'orphan_age'=> $age ,
                     "name" => $request->post('name_' . $i),
@@ -80,6 +80,7 @@ class RecordController extends Controller
                     'data_portal' => $request->user()->id,
                     'data_portal_name' => $request->user()->name
                 ]);
+
                 $haveOrphan = Record::where('orphan_id', $request->post('orphan_id_' . $i))->first();
                 if($haveOrphan){
                     return redirect()->back()->with('danger','هذا اليتيم موجود بالفعل');
@@ -190,22 +191,43 @@ class RecordController extends Controller
         return redirect()->route('records.index')->with('success', 'تم رفع الملف');
     }
 
+    public function convertDateExcel($date){
+        if (is_numeric($date)) { // تأكد من أن القيمة رقمية
+            $unix_date = ($date - 25569) * 86400;
+            $date_f = gmdate("Y-m-d", $unix_date);
+            return $date_f;
+        } else {
+            return $date; // إذا كانت القيمة غير رقمية، أرجعها كما هي
+        }
+    }
+
     public function editAge(Request $request)
     {
-        $records = Record::get();
-        foreach ($records as $record) {
-            try{
-                $record->date_of_birth = Record::convertDateExcel($record->date_of_birth);
-                $record->DMB_mother = Record::convertDateExcel($record->DMB_mother);
-                $record->DGM_guardian = Record::convertDateExcel($record->DGM_guardian);
-                $record->date_of_death = Record::convertDateExcel($record->date_of_death);
-                $record->DMD_mother = Record::convertDateExcel($record->DMD_mother);
+        try {
+            $records = Record::get();
+            foreach ($records as $record2) {
+                $record = Record::findOrFail($record2->id);
+                if(is_numeric($record->date_of_birth)){
+                    $record->date_of_birth = $this->convertDateExcel($record->date_of_birth);
+                }
+                if(is_numeric($record->DMB_mother)){
+                    $record->DMB_mother = $this->convertDateExcel($record->DMB_mother);
+                }
+                if(is_numeric($record->DGM_guardian)){
+                    $record->DGM_guardian = $this->convertDateExcel($record->DGM_guardian);
+                }
+                if(is_numeric($record->date_of_death)){
+                    $record->date_of_death = $this->convertDateExcel($record->date_of_death);
+                }
+                if(is_numeric($record->DMD_mother)){
+                    $record->DMD_mother = $this->convertDateExcel($record->DMD_mother);
+                }
                 $record->save();
-            }catch(Exception $e){
-                // throw $e;
-                continue;
             }
+        } catch (\Exception $e) {
+            dd($e->getMessage());
         }
+        dd(Record::get());
         return redirect()->route('records.index')->with('success', 'تم رفع الملف');
     }
 }

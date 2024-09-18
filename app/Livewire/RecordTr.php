@@ -117,12 +117,19 @@ class RecordTr extends Component
         $this->dilfilter = '';
     }
     public function update($id,$name, $value){
-        Record::updateOrCreate([
-            'id' => $id,
-        ],[
+        if($name == 'date_of_birth'){
+            $value = Carbon::parse($value)->format('Y-m-d');
+            $age = Carbon::now()->format('Y') - Carbon::parse($value)->format('Y');
+            Record::where('id', $id)->update([
+                "orphan_age" => $age,
+            ]);
+        }
+        Record::where('id', $id)->update([
             "$name" => $value,
         ]);
     }
+
+
     public function export(){
         $records = Record::query();
         foreach ($this->flterArray as $key => $value) {

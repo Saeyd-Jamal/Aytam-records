@@ -1,6 +1,9 @@
 
 <div class="container-fluid">
     <div class="row justify-content-end m-2">
+        <button type="button" class="btn btn-danger" wire:click="minusRow">
+            <i class="fe fe-minus"></i> حذف اخر يتيم
+        </button>
         <button type="button" class="btn btn-primary" wire:click="addRow">
             <i class="fe fe-plus"></i> إضافة يتيم
         </button>

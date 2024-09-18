@@ -1,0 +1,11 @@
+hr {
+  right: 25px;
+}
+
+html {
+  direction: rtl;
+}
+
+.head_td{
+  text-align: right;
+}
