@@ -31,4 +31,4 @@
     @stack('styles')
 </head>
 
-<body class="vertical  light rtl">
+<body class="horizontal  light rtl">

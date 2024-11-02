@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('avatar')->nullable();
+            $table->string('section')->nullable();
             $table->boolean('super_admin')->default(0);
             $table->timestamp('last_activity')->nullable();
             $table->rememberToken();

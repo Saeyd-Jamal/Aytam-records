@@ -28,7 +28,8 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
         $user = new User();
-        return view('dashboard.users.create',compact('user'));
+        $sections = User::select('section')->distinct()->pluck('section')->toArray();
+        return view('dashboard.users.create',compact('user','sections'));
     }
 
     /**
@@ -80,8 +81,8 @@ class UserController extends Controller
         $this->authorize('update', User::class);
         $user = User::findOrFail($id);
         $btn_label = "تعديل";
-
-        return view('dashboard.users.edit',compact('user','btn_label'));
+        $sections = User::select('section')->distinct()->pluck('section')->toArray();
+        return view('dashboard.users.edit',compact('user','btn_label','sections'));
 
     }
 

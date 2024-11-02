@@ -8,7 +8,7 @@ table {
     border-collapse: collapse;
     display: block;
     overflow: auto;
-    height: 450px;
+    height: calc(100vh - 169px);
 }
 table thead {
     background-color: #f2f2f2;
@@ -33,7 +33,7 @@ table tbody tr {
     position: -webkit-sticky; /* Safari */
     position: sticky;
     right: 0;
-    background-color: #fff;
+    background-color: #f8f9fa;
     z-index: 3; /* تأكد من أن العمود المثبت يظهر فوق الأعمدة الأخرى */
 }
 

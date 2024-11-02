@@ -10,7 +10,11 @@ Route::group([
     'prefix'=> '',
     'middleware' => ['auth'],
 ], function () {
-    Route::get('/', function () {return view('welcome');})->name('dashboard');
+    Route::get('/', function () {
+        return redirect()->route('records.index');
+    })->name('dashboard');
+
+
     Route::get('records/recordsConstants', [RecordsConstantController::class, 'index'])->name('records-recordsConstants');;
     Route::post('records/recordsConstants/create', [RecordsConstantController::class, 'store'])->name('records-recordsConstants-create');;
     Route::post('records/recordsConstants/update', [RecordsConstantController::class, 'update'])->name('records-recordsConstants-update');;
@@ -18,6 +22,7 @@ Route::group([
 
     Route::post('records/checkID',[RecordController::class,'checkID']);
     Route::post('records/importFile',[RecordController::class,'import'])->name('records-import');
+    Route::post('records/export',[RecordController::class,'export'])->name('records.export');
     Route::get('records/editAge',[RecordController::class,'editAge'])->name('records-editAge');
 
     Route::resources([

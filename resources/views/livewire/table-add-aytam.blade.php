@@ -22,7 +22,7 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th>#</th>
-                                <th>الاسم</th>
+                                <th colspan="4">الاسم</th>
                                 <th>الجنس</th>
                                 <th>رقم الهوية</th>
                                 <th>تاريخ الميلاد</th>
@@ -31,11 +31,14 @@
                                 <th>الحالة الصحية</th>
                                 <th>ملاحظات حول الحالة الصحية</th>
                                 <th>هل يتيم الأبوين؟</th>
-                                <th>اسم الأم</th>
+                                <th colspan="4">اسم الأم</th>
                                 <th>رقم هوية الأم</th>
+                                <th>الحالة الإجتماعية للأم</th>
                                 <th>تاريخ ميلاد الام</th>
                                 <th>تاريخ وفاة الأم</th>
                                 <th>سبب وفاة الأم</th>
+                                <th>عدد الأخوة</th>
+                                <th>عدد الأخوات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,7 +52,16 @@
                                 <tr>
                                     <td>{{$i}}</td>
                                     <td class="sticky">
-                                        <input type="text" name="name_{{$i}}" class="form-control" title="الاسم">
+                                        <input type="text" name="first_name_{{$i}}" class="form-control" title="الاسم">
+                                    </td>
+                                    <td class="sticky">
+                                        <input type="text" name="father_name_{{$i}}" class="form-control" title="الاسم">
+                                    </td>
+                                    <td class="sticky">
+                                        <input type="text" name="grandfather_name_{{$i}}" class="form-control" title="الاسم">
+                                    </td>
+                                    <td class="sticky">
+                                        <input type="text" name="family_name_{{$i}}" class="form-control" title="الاسم">
                                     </td>
                                     <td>
                                         <select class="form-control" name="gender_{{$i}}" required>
@@ -63,7 +75,7 @@
                                     </td>
                                     <td>
                                         <div>
-                                        <input type="text" name="orphan_id_{{$i}}" class="form-control form-control-alternative orphan_id" minlength="9" maxlength="9" required="required" wire:input="checkID($event.target.value)">
+                                            <input type="text" name="orphan_id_{{$i}}" class="form-control form-control-alternative orphan_id" minlength="9" maxlength="9" required="required" wire:input="checkID($event.target.value)">
                                         </div>
                                     </td>
                                     <td>
@@ -73,7 +85,7 @@
                                         <x-form.input type="text" name="address_of_birth_{{$i}}"  title="عنوان الميلاد" required />
                                     </td>
                                     <td>
-                                        <textarea class="form-control" name="notes_orphan_{{$i}}" placeholder="يمكنك كتابة ملاحظات " rows="3" ></textarea>
+                                        <textarea class="form-control" name="notes_orphan_{{$i}}"  style="width: 150px !important;" placeholder="يمكنك كتابة ملاحظات " rows="1" ></textarea>
                                     </td>
                                     <td>
                                         <select class="form-control" name="status_health_orphan_{{$i}}" required>
@@ -87,7 +99,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <textarea class="form-control" name="health_status_notes_{{$i}}" placeholder="يمكنك شرح الحالة بشكل مفصل" rows="3"></textarea>
+                                        <textarea class="form-control" name="health_status_notes_{{$i}}" style="width: 150px !important;"  placeholder="يمكنك شرح الحالة بشكل مفصل" rows="1"></textarea>
                                     </td>
                                     <td>
                                         <select class="form-control" wire:input="disableField_child_orphaned_parents({{$i}},$event.target.value)" id="child_orphaned_parents_{{$i}}" name="child_orphaned_parents_{{$i}}" required>
@@ -101,12 +113,32 @@
                                     </td>
                                     <td>
                                         <div class="input-group mb-3">
-                                            <x-form.input type="text" name="mother_name_{{$i}}" required />
+                                            <x-form.input type="text" name="first_mother_name_{{$i}}" required />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group mb-3">
+                                            <x-form.input type="text" name="father_mother_name_{{$i}}" required />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group mb-3">
+                                            <x-form.input type="text" name="grandfather_mother_name_{{$i}}" required />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group mb-3">
+                                            <x-form.input type="text" name="family_mother_name_{{$i}}" required />
                                         </div>
                                     </td>
                                     <td>
                                         <div class="input-group mb-3">
                                             <x-form.input id="Id_mother" type="text" name="Id_mother_{{$i}}" minlength="9" maxlength="9"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group mb-3">
+                                            <x-form.input type="text" name="mother_social_situation_{{$i}}" />
                                         </div>
                                     </td>
                                     <td>
@@ -128,6 +160,12 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                    </td>
+                                    <td>
+                                        <x-form.input type="number" name="N_brothers_{{$i}}" value="0" title="عدد الأخوة" required min='0' />
+                                    </td>
+                                    <td>
+                                        <x-form.input type="number" name="N_sisters_{{$i}}" value="0"  title="عدد الاخوات" required min='0' />
                                     </td>
                                 </tr>
                             @endfor

@@ -19,33 +19,57 @@ class RecordExport implements FromCollection,WithHeadings
     public function headings(): array
     {
         return [
-            'اسم اليتيم رباعي',
+            'اسم اليتيم',
+            'اسم الاب',
+            'اسم الجد',
+            'اسم العائلة',
             'الجنس',
             'رقم هوية اليتيم',
             'تاريخ الميلاد',
-            'مكان الميلاد',
             'عمر اليتيم',
+            'مكان الميلاد',
+            'الحالة الصحية لليتيم',
+            'ملاحظات- اليتيم المريض',
+            'هل الطفل يتيم الابوين ؟',
+            'عدد الاخوة الذكور',
+            'عدد الاخوة الاناث',
+            'ملاحظات عن اليتيم',
+
+            'اسم المتوفى',
+            'اسم والد المتوفي',
+            'اسم جد المتوفي',
+            'اسم عائلة المتوفي',
             'رقم هوية الأب',
             'تاريخ ميلاد الأب',
-            'اسم الام رباعي',
+            'تاريخ الوفاة',
+            'سبب الوفاة',
+
+
+            'اسم الام',
+            'اسم والد الأم',
+            'اسم جد الأم',
+            'اسم عائلة الأم',
             'رقم هوية الأم',
             'تاريخ ميلاد الأم',
+            'تاريخ وفاة الام',
+            'سبب وفاة الام',
+            'الحالة الإجتماعية للأم',
+
+
             'اسم ولي الامر',
+            'اسم والد ولي الأمر',
+            'اسم جد ولي الأمر',
+            'اسم عائلة ولي الأمر',
             'صلة القرابة باليتيم',
             'هوية ولي الامر',
             'تاريخ ميلاد ولي الأمر',
             'المؤهل العلمي لولي الامر',
             'عمل ولي الأمر',
-            'الحالة الصحية لليتيم',
-            'ملاحظات- اليتيم المريض',
-            'اسم المتوفى',
-            'تاريخ الوفاة',
-            'سبب الوفاة',
-            'هل الطفل يتيم الابوين ؟',
-            'تاريخ وفاة الام',
-            'سبب وفاة الام',
-            'عدد الاخوة الذكور',
-            'عدد الاخوة الاناث',
+            'رقم جوال 1',
+            'رقم جوال 2',
+            'رقم واتس',
+
+
             'وضع البيت',
             'المحافظة السابقة',
             'المدينة السابقة',
@@ -54,17 +78,15 @@ class RecordExport implements FromCollection,WithHeadings
             'المدينة الحالية',
             'العنوان الحالي بالتفصيل',
             'هل اليتيم نازح؟',
-            'رقم جوال 1',
-            'رقم جوال 2',
-            'رقم واتس',
+
             'استفاد/كسوة',
             'استفاد/كفالة',
-            'ملاحظات عن اليتيم',
             'مدخل البيانات',
+            'الفرع',
             'تاريخ الإدخال'
         ];
     }
-    
+
     /**
     * @return \Illuminate\Support\Collection
     */
@@ -85,33 +107,57 @@ class RecordExport implements FromCollection,WithHeadings
         $this->query->orderBy('id')->chunk($this->chunkSize, function ($records) use (&$data) {
             foreach ($records as $record) {
                 $data->push([
-                    $record->name,
+                    $record->first_name,
+                    $record->father_name,
+                    $record->grandfather_name,
+                    $record->family_name,
                     $record->gender,
                     $record->orphan_id,
                     $record->date_of_birth,
+                    $record->age,
                     $record->address_of_birth,
-                    $record->orphan_age,
+                    $record->status_health_orphan,
+                    $record->health_status_notes,
+                    $record->child_orphaned_parents,
+                    $record->N_brothers,
+                    $record->N_sisters,
+                    $record->notes_orphan,
+
+                    $record->first_deceased_name,
+                    $record->father_deceased_name,
+                    $record->grandfather_deceased_name,
+                    $record->family_deceased_name,
                     $record->Id_father,
                     $record->DFB_father,
-                    $record->mother_name,
+                    $record->date_of_death,
+                    $record->cause_of_death,
+
+
+                    $record->first_mother_name,
+                    $record->father_mother_name,
+                    $record->grandfather_mother_name,
+                    $record->family_mother_name,
                     $record->Id_mother,
                     $record->DMB_mother,
-                    $record->guardian_name,
+                    $record->DMD_mother,
+                    $record->CMD_mother,
+                    $record->mother_social_situation,
+
+
+                    $record->first_guardian_name,
+                    $record->father_guardian_name,
+                    $record->grandfather_guardian_name,
+                    $record->family_guardian_name,
                     $record->guardian_RWO,
                     $record->guardian_id,
                     $record->DGM_guardian,
                     $record->guardian_scientific_qualification,
                     $record->guardian_work,
-                    $record->status_health_orphan,
-                    $record->health_status_notes,
-                    $record->deceased_name,
-                    $record->date_of_death,
-                    $record->cause_of_death,
-                    $record->child_orphaned_parents,
-                    $record->DMD_mother,
-                    $record->CMD_mother,
-                    $record->N_brothers,
-                    $record->N_sisters,
+                    $record->mobile_number1,
+                    $record->mobile_number2,
+                    $record->WhatsApp_number,
+
+                    
                     $record->CH_house,
                     $record->p_province,
                     $record->p_city,
@@ -120,13 +166,11 @@ class RecordExport implements FromCollection,WithHeadings
                     $record->c_city,
                     $record->c_address,
                     $record->orphan_displaced,
-                    $record->mobile_number1,
-                    $record->mobile_number2,
-                    $record->WhatsApp_number,
+
                     $record->livery,
                     $record->financial_aid,
-                    $record->notes_orphan,
                     $record->data_portal_name,
+                    $record->section,
                     $record->created_at,
                 ]);
             }

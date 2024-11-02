@@ -35,6 +35,15 @@
     </div>
     @endif
 
+    <div class="form-group p-3 col-4">
+        <x-form.input label="الفرع" :value="$user->section" list="sections_list" name="section" placeholder="جباليا ..."/>
+        <datalist id="sections_list">
+            @foreach ($sections as $section)
+                <option value="{{$section}}"></option>
+            @endforeach
+        </datalist>
+    </div>
+
 </div>
 <div class="row ml-3">
     <fieldset id="user-roles" class="col-12">

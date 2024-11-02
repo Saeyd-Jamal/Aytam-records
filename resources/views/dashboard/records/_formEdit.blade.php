@@ -1,9 +1,27 @@
 <h3>بيانات اليتيم</h3>
 <div class="row mt-3">
-    <div class="form-group col-md-12">
+    <div class="form-group col-md-3">
         <label>الاسم</label>
         <div class="input-group mb-3">
-            <x-form.input type="text" name="name" :value="$record->name" required />
+            <x-form.input type="text" name="first_name" :value="$record->first_name" required />
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label>الأب</label>
+        <div class="input-group mb-3">
+            <x-form.input type="text" name="father_name" :value="$record->father_name" required />
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label>الجد</label>
+        <div class="input-group mb-3">
+            <x-form.input type="text" name="grandfather_name" :value="$record->grandfather_name" required />
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label>العائلة</label>
+        <div class="input-group mb-3">
+            <x-form.input type="text" name="family_name" :value="$record->family_name" required />
         </div>
     </div>
     <div class="form-group col-md-3">
@@ -89,17 +107,35 @@
     <div class="form-group col-md-3">
         <label>اسم المتوفى</label>
         <div class="input-group mb-3">
-            <x-form.input type="text" :value="$record->deceased_name" name="deceased_name" required />
+            <x-form.input type="text" :value="$record->first_deceased_name" name="first_deceased_name" required />
         </div>
     </div>
     <div class="form-group col-md-3">
-        <label>تاريخ الوفاء</label>
+        <label>اسم والد المتوفى</label>
+        <div class="input-group mb-3">
+            <x-form.input type="text" :value="$record->father_deceased_name" name="father_deceased_name" required />
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label>اسم جد المتوفى</label>
+        <div class="input-group mb-3">
+            <x-form.input type="text" :value="$record->grandfather_deceased_name" name="grandfather_deceased_name" required />
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label>اسم عائلة المتوفى</label>
+        <div class="input-group mb-3">
+            <x-form.input type="text" :value="$record->family_deceased_name" name="family_deceased_name" required />
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label>تاريخ الوفاة</label>
         <div class="input-group">
             <x-form.input :value="$record->date_of_death" placeholder="MM/DD/YYYY" type="date" name="date_of_death" required />
         </div>
     </div>
     <div class="form-group col-md-3">
-        <label>سبب الوفاء</label>
+        <label>سبب الوفاة</label>
         <select class="form-control" name="cause_of_death" required>
             <option label="أختر السبب" @selected($record->cause_of_death == null)>
             </option>
@@ -130,7 +166,25 @@
     <div class="form-group col-md-3">
         <label>اسم الأم</label>
         <div class="input-group mb-3">
-            <x-form.input type="text" :value="$record->mother_name" name="mother_name" required />
+            <x-form.input type="text" :value="$record->first_mother_name" name="first_mother_name" required />
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label>اسم والد الأم</label>
+        <div class="input-group mb-3">
+            <x-form.input type="text" :value="$record->father_mother_name" name="father_mother_name" required />
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label>اسم جد الأم</label>
+        <div class="input-group mb-3">
+            <x-form.input type="text" :value="$record->grandfather_mother_name" name="grandfather_mother_name" required />
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label>اسم عائلة الأم</label>
+        <div class="input-group mb-3">
+            <x-form.input type="text" :value="$record->family_mother_name" name="family_mother_name" required />
         </div>
     </div>
     <div class="form-group col-md-3">
@@ -141,21 +195,25 @@
         </div>
     </div>
     <div class="form-group col-md-3">
+        <label>الحالة الإجتماعية للأم</label>
+        <div class="input-group mb-3">
+            <x-form.input type="text" :value="$record->mother_social_situation" name="mother_social_situation"/>
+        </div>
+    </div>
+    <div class="form-group col-md-3">
         <label>تاريخ ميلاد الأم</label>
         <div class="input-group">
             <x-form.input type="date" name="DMB_mother" :value="$record->DMB_mother" />
         </div>
     </div>
     <div class="form-group col-md-3">
-        <label>تاريخ وفاء الام</label>
+        <label>تاريخ وفاة الام</label>
         <div class="input-group">
-
-
             <input type="date" name="DMD_mother" id="DMD_mother" value="{{$record->DMD_mother}}" class="form-control form-control-alternative form-control fields_mother"  @disabled($record->child_orphaned_parents == 'يتيم الأب' || $record->child_orphaned_parents == null)>
         </div>
     </div>
     <div class="form-group col-md-3">
-        <label>سبب وفاء الام</label>
+        <label>سبب وفاة الام</label>
         <select class="form-control fields_mother" name="CMD_mother" @disabled($record->child_orphaned_parents == 'يتيم الأب' || $record->child_orphaned_parents == null)>
             <option label="أختر السبب" @selected($record->CMD_mother == null)>
             </option>
@@ -173,7 +231,25 @@
     <div class="form-group col-md-3">
         <label>اسم ولي الأمر</label>
         <div class="input-group mb-3">
-            <x-form.input type="text" :value="$record->guardian_name" name="guardian_name" required />
+            <x-form.input type="text" :value="$record->first_guardian_name" name="first_guardian_name" required />
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label>اسم والد ولي الأمر</label>
+        <div class="input-group mb-3">
+            <x-form.input type="text" :value="$record->father_guardian_name" name="father_guardian_name" required />
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label>اسم جد ولي الأمر</label>
+        <div class="input-group mb-3">
+            <x-form.input type="text" :value="$record->grandfather_guardian_name" name="grandfather_guardian_name" required />
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label>اسم عائلة ولي الأمر</label>
+        <div class="input-group mb-3">
+            <x-form.input type="text" :value="$record->family_guardian_name" name="family_guardian_name" required />
         </div>
     </div>
     <div class="form-group col-md-3">
@@ -336,8 +412,7 @@
     <div class="form-group col-md-3">
         <label>استفاد كفالة</label>
         <select class="form-control" name="financial_aid">
-            <option label="أختر" @selected($record->financial_aid == null)>
-            </option>
+            <option label="أختر" @selected($record->financial_aid == null)></option>
             <option value="نعم" @selected($record->financial_aid == 'نعم')>نعم</option>
             <option value="لا" @selected($record->financial_aid == 'لا')>لا</option>
         </select>
@@ -351,6 +426,12 @@
             <label>مدخل البيانات</label>
             <div class="input-group mb-3">
                 <x-form.input type="text" :value="$record->data_portal_name" name="data_portal_name" disabled />
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <label>الفرع</label>
+            <div class="input-group mb-3">
+                <x-form.input type="text" :value="$record->section" name="section" disabled />
             </div>
         </div>
         <div class="form-group col-md-3">

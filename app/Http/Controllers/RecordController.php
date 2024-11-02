@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\RecordExport;
 use App\Imports\OrphanRecordImportError;
 use App\Imports\RecordImportError;
 use App\Models\Record;
@@ -62,10 +63,13 @@ class RecordController extends Controller
             for($i = 1; $i <= $aytam_count; $i++){
                 $age = Carbon::now()->format('Y') - Carbon::parse($request->post('date_of_birth_' . $i))->format('Y');
 
-                $data->except(['orphan_age',"name","gender",'orphan_id','date_of_birth','address_of_birth','notes_orphan','status_health_orphan','health_status_notes','child_orphaned_parents','mother_name','Id_mother','DMB_mother']);
+                $data->except(['age','first_name','father_name','grandfather_name','family_name',"gender",'orphan_id','date_of_birth','address_of_birth','notes_orphan','status_health_orphan','health_status_notes','child_orphaned_parents','first_mother_name','father_mother_name','grandfather_mother_name','family_mother_name','Id_mother','mother_social_situation','DMB_mother','N_brothers','N_sisters']);
                 $data->merge([
-                    'orphan_age'=> $age ,
-                    "name" => $request->post('name_' . $i),
+                    'age'=> $age ,
+                    "first_name" => $request->post('first_name_' . $i),
+                    "father_name" => $request->post('father_name_' . $i),
+                    "grandfather_name" => $request->post('grandfather_name_' . $i),
+                    "family_name" => $request->post('family_name_' . $i),
                     "gender" => $request->post('gender_' . $i),
                     "orphan_id" => $request->post('orphan_id_' . $i),
                     "date_of_birth" => $request->post('date_of_birth_' . $i),
@@ -74,11 +78,17 @@ class RecordController extends Controller
                     "status_health_orphan" => $request->post('status_health_orphan_' . $i),
                     "health_status_notes" => $request->post('health_status_notes_' . $i),
                     "child_orphaned_parents" => $request->post('child_orphaned_parents_' . $i),
-                    "mother_name" => $request->post('mother_name_' . $i),
+                    "first_mother_name" => $request->post('first_mother_name_' . $i),
+                    "father_mother_name" => $request->post('father_mother_name_' . $i),
+                    "grandfather_mother_name" => $request->post('grandfather_mother_name_' . $i),
+                    "family_mother_name" => $request->post('family_mother_name_' . $i),
                     "Id_mother" => $request->post('Id_mother_' . $i),
                     "DMB_mother" => $request->post('DMB_mother_' . $i),
+                    "N_brothers" => $request->post('N_brothers_' . $i),
+                    "N_sisters" => $request->post('N_sisters_' . $i),
                     'data_portal' => $request->user()->id,
-                    'data_portal_name' => $request->user()->name
+                    'data_portal_name' => $request->user()->name,
+                    'section' => $request->user()->section
                 ]);
 
                 $haveOrphan = Record::where('orphan_id', $request->post('orphan_id_' . $i))->first();
@@ -150,8 +160,9 @@ class RecordController extends Controller
             ]);
 
             $age = Carbon::now()->format('Y') - Carbon::parse($request->post('date_of_birth'))->format('Y');
+
             $request->merge([
-                'orphan_age'=> $age ,
+                'age'=> $age ,
             ]);
             $record->update($request->all());
 
@@ -187,8 +198,43 @@ class RecordController extends Controller
         if($file == null){
             return redirect()->back()->with('danger', 'لم يتم رفع الملف');
         }
+
         Excel::import(new RecordImportError, $file);
         return redirect()->route('records.index')->with('success', 'تم رفع الملف');
+    }
+
+    public function export(Request $request)
+    {
+        $this->authorize('export', Record::class);
+        $records = Record::query();
+        $filterArray = json_decode($request->filterArray, true);
+        foreach ($filterArray as $key => $value) {
+            if(!empty($value)){
+                if($key == 'date_of_birth_from'|| $key == 'created_at_from'){
+                    ($key == 'date_of_birth_from') ? $key = 'date_of_birth' : $key = 'created_at';
+                    if($value == ''){
+                        $records->where($key ,'>=',$this->date_of_birth);
+                    }else{
+                        $records->where($key ,'>=',"$value");
+                    }
+                }elseif($key == 'date_of_birth_to'|| $key == 'created_at_to'){
+                    ($key == 'date_of_birth_to') ? $key = 'date_of_birth' : $key = 'created_at';
+                    if($value == ''){
+                        $records->where($key ,'<=',Carbon::now()->format('Y-m-d'));
+                    }else{
+                        $value = Carbon::parse($value)->format('Y-m-d');
+                        $records->where($key ,'<=',"$value");
+                    }
+                }elseif($key == 'name'){
+                    $valueS = str_replace('*', '%', $value);
+                    $records->where($key ,'LIKE',"%{$valueS}%");
+                }else{
+                    $records->where($key ,'LIKE',"%{$value}%");
+                }
+            }
+        }
+        $time = Carbon::now()->format('Y-m-d H:i:s');
+        return Excel::download(new RecordExport($records), "سجلات الأيتام - $time.xlsx");
     }
 
     public function convertDateExcel($date){
